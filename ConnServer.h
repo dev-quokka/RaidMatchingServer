@@ -9,8 +9,8 @@
 class ConnServer {
 public:
 	ConnServer(uint32_t bufferSize_, uint16_t connObjNum_, HANDLE sIOCPHandle_, OverLappedManager* overLappedManager_)
-		:connObjNum(connObjNum_),  sIOCPHandle(sIOCPHandle_), overLappedManager(overLappedManager_) {
-		
+		:connObjNum(connObjNum_), sIOCPHandle(sIOCPHandle_), overLappedManager(overLappedManager_) {
+
 		serverSkt = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_IP, NULL, 0, WSA_FLAG_OVERLAPPED);
 		if (serverSkt == INVALID_SOCKET) {
 			std::cout << "Client socket Error : " << GetLastError() << std::endl;

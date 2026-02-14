@@ -102,7 +102,7 @@ void RedisManager::ImMatchingResponse(uint16_t connObjNum_, uint16_t packetSize_
     std::cout << "Successfully Authenticated with Center Server" << std::endl;
 }
 
-void RedisManager::ImGameRequest(uint16_t connObjNum_, uint16_t packetSize_, char* pPacket_){
+void RedisManager::ImGameRequest(uint16_t connObjNum_, uint16_t packetSize_, char* pPacket_) {
     auto centerConn = reinterpret_cast<MATCHING_SERVER_CONNECT_REQUEST_FROM_RAID_SERVER*>(pPacket_);
     auto tempNum = centerConn->gameServerNum;
 
@@ -133,14 +133,14 @@ void RedisManager::MatchStart(uint16_t connObjNum_, uint16_t packetSize_, char* 
     matchResPacket.PacketId = (uint16_t)PACKET_ID::MATCHING_RESPONSE_FROM_MATCHING_SERVER;
     matchResPacket.PacketLength = sizeof(MATCHING_RESPONSE_FROM_MATCHING_SERVER);
     matchResPacket.userCenterObjNum = matchingManager->Insert(matchingReqPacket->userPk, matchingReqPacket->userCenterObjNum, matchingReqPacket->userGroupNum);
-    
+
     if (matchResPacket.userCenterObjNum == 0) matchResPacket.isSuccess = false;
     else matchResPacket.isSuccess = true;
 
     connServersManager->FindServer(connObjNum_)->PushSendMsg(sizeof(MATCHING_RESPONSE_FROM_MATCHING_SERVER), (char*)&matchResPacket);
 }
 
-void RedisManager::MatchingCancel(uint16_t connObjNum_, uint16_t packetSize_, char* pPacket_){
+void RedisManager::MatchingCancel(uint16_t connObjNum_, uint16_t packetSize_, char* pPacket_) {
     auto matchingReqPacket = reinterpret_cast<MATCHING_CANCEL_REQUEST_TO_MATCHING_SERVER*>(pPacket_);
 
     MATCHING_CANCEL_RESPONSE_FROM_MATCHING_SERVER matchCancelResPacket;
@@ -159,5 +159,5 @@ void RedisManager::RaidEnd(uint16_t connObjNum_, uint16_t packetSize_, char* pPa
     auto matchingReqPacket = reinterpret_cast<RAID_END_REQUEST_TO_MATCHING_SERVER*>(pPacket_);
 
     matchingManager->InserRoomNum(matchingReqPacket->roomNum);
-	std::cout << "Raid Ended. Get RoomNum : " << matchingReqPacket->roomNum << std::endl;
+    std::cout << "GameServer1::RoomNum : " << matchingReqPacket->roomNum << " 레이드 종료. RoomNum : " << matchingReqPacket->roomNum << " 재삽입" << std::endl;
 }

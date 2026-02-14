@@ -24,4 +24,8 @@ struct ServerAddress {
 	uint16_t port;
 };
 
-extern std::unordered_map<ServerType, ServerAddress> ServerAddressMap;
+inline std::unordered_map<ServerType, ServerAddress> ServerAddressMap = { // Set server addresses
+	{ ServerType::CenterServer,     { "127.0.0.1", 9090 } },
+	{ ServerType::RaidGameServer01, { "127.0.0.1", 9501 } },
+	{ ServerType::MatchingServer,   { "127.0.0.1", 9131 } }
+};
